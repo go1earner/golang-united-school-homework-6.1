@@ -2,6 +2,11 @@ package golang_united_school_homework
 
 import "fmt"
 
+var (
+	nullShape  = fmt.Errorf("shape does not exist")
+	outOfRange = fmt.Errorf("requested shape out of the range")
+)
+
 // box contains list of shapes and able to perform operations on them
 type box struct {
 	shapes         []Shape
@@ -31,11 +36,11 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 	if i <= len(b.shapes) {
 		shape := b.shapes[i]
 		if shape == nil {
-			return nil, fmt.Errorf("shape does not exist")
+			return nil, nullShape
 		}
 		return shape, nil
 	} else {
-		return nil, fmt.Errorf("requested shape out of the range")
+		return nil, outOfRange
 	}
 }
 
@@ -45,12 +50,12 @@ func (b *box) ExtractByIndex(i int) (Shape, error) {
 	if i <= len(b.shapes) {
 		shape := b.shapes[i]
 		if shape == nil {
-			return nil, fmt.Errorf("shape does not exist")
+			return nil, nullShape
 		}
 		b.shapes = append(b.shapes[:i], b.shapes[i+1:]...)
 		return shape, nil
 	} else {
-		return nil, fmt.Errorf("requested shape out of the range")
+		return nil, outOfRange
 	}
 }
 
@@ -60,12 +65,12 @@ func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
 	if i <= len(b.shapes) {
 		removedShape := b.shapes[i]
 		if removedShape == nil {
-			return nil, fmt.Errorf("shape does not exist")
+			return nil, nullShape
 		}
 		b.shapes[i] = shape
 		return removedShape, nil
 	} else {
-		return nil, fmt.Errorf("requested shape out of the range")
+		return nil, outOfRange
 	}
 }
 
